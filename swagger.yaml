@@ -199,3 +199,14 @@ components:
           type: string
         author:
           type: string
+        yearPublished:
+          type: integer
+        genre:
+          type: string
+        pages:
+          type: integer
+        available:
+          type: boolean
+        addedAt:
+          type: string
+          format: date-time
