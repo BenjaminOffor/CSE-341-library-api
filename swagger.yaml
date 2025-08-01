@@ -5,7 +5,7 @@ info:
   description: API for managing books and authors
 
 servers:
-  - url: http://localhost:3000
+  - url: https://cse-341-library-api.onrender.com
 
 tags:
   - name: Authors
