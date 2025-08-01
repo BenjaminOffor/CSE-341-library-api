@@ -1,0 +1,17 @@
+# Node modules
+node_modules/
+
+# Environment files
+.env
+
+# Log files
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# VSCode
+.vscode/
+
+# Mac and Windows junk
+.DS_Store
+Thumbs.db
