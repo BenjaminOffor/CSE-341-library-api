@@ -3,12 +3,15 @@ const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 const YAML = require('yamljs');
 const swaggerUi = require('swagger-ui-express');
+const cors = require('cors');
 
-const app = express();
+dotenv.config(); // Load environment variables first
+
+const app = express(); // ✅ Now 'app' is declared before use
 const PORT = process.env.PORT || 3000;
 
-// ✅ Load environment variables
-dotenv.config();
+// ✅ Enable CORS
+app.use(cors());
 
 // ✅ Middleware to parse JSON
 app.use(express.json());
@@ -22,15 +25,17 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 // ✅ Import routes
 const bookRoutes = require('./routes/books');
 const authorRoutes = require('./routes/authors');
+const authRoutes = require('./routes/auth'); // ✅ Authentication
+
+// ✅ Use routes
+app.use('/api/books', bookRoutes);
+app.use('/api/authors', authorRoutes);
+app.use('/api/auth', authRoutes); // ✅ Login/Register
 
 // ✅ Base route
 app.get('/', (req, res) => {
   res.send('API is running!');
 });
-
-// ✅ Use routes
-app.use('/api/books', bookRoutes);
-app.use('/api/authors', authorRoutes);
 
 // ✅ Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)

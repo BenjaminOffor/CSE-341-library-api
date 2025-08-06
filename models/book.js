@@ -12,19 +12,20 @@ const bookSchema = new mongoose.Schema({
   },
   yearPublished: {
     type: Number,
-    required: false
+    required: true
   },
   genre: {
     type: String,
-    required: false
+    required: true
   },
   pages: {
     type: Number,
-    required: false
+    required: true
   },
   available: {
     type: Boolean,
-    default: true
+    default: true,
+    required: true
   },
   addedAt: {
     type: Date,
