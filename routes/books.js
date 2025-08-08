@@ -3,6 +3,7 @@ const router = express.Router();
 const bookController = require('../controllers/bookController');
 const Book = require('../models/book');
 const { body, validationResult } = require('express-validator');
+const authenticateToken = require('../middleware/auth'); // ✅ Import authentication
 
 // Validation
 const validateBook = [
@@ -30,10 +31,10 @@ async function getBook(req, res, next) {
 }
 
 // Routes
-router.get('/', bookController.getAllBooks);
-router.get('/:id', getBook, bookController.getBookById);
-router.post('/', validateBook, handleValidation, bookController.createBook);
-router.put('/:id', getBook, validateBook, handleValidation, bookController.updateBook);
-router.delete('/:id', getBook, bookController.deleteBook);
+router.get('/', bookController.getAllBooks); // Public
+router.get('/:id', getBook, bookController.getBookById); // Public
+router.post('/', authenticateToken, validateBook, handleValidation, bookController.createBook); // Protected
+router.put('/:id', authenticateToken, getBook, validateBook, handleValidation, bookController.updateBook); // Protected
+router.delete('/:id', authenticateToken, getBook, bookController.deleteBook); // Protected
 
 module.exports = router;

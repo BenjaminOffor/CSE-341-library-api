@@ -2,7 +2,8 @@ const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/auth');
 
-router.post('/register', authController.register); // ✅ New registration route
-router.post('/login', authController.login);        // Existing login route
+// Auth routes
+router.post('/register', authController.register);  // Register a new user
+router.post('/login', authController.login);        // Login and get a token
 
 module.exports = router;

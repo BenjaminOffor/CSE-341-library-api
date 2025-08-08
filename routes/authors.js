@@ -3,6 +3,7 @@ const router = express.Router();
 const Author = require('../models/author');
 const authorController = require('../controllers/authorController');
 const { body, validationResult } = require('express-validator');
+const authenticateToken = require('../middleware/auth'); // ✅ Import authentication
 
 // Validation
 const validateAuthor = [
@@ -30,11 +31,12 @@ async function getAuthor(req, res, next) {
   next();
 }
 
+
 // Routes
-router.get('/', authorController.getAllAuthors);
-router.get('/:id', getAuthor, authorController.getAuthorById);
-router.post('/', validateAuthor, handleValidation, authorController.createAuthor);
-router.put('/:id', getAuthor, validateAuthor, handleValidation, authorController.updateAuthor);
-router.delete('/:id', getAuthor, authorController.deleteAuthor);
+router.get('/', authorController.getAllAuthors); // Public
+router.get('/:id', getAuthor, authorController.getAuthorById); // Public
+router.post('/', authenticateToken, validateAuthor, handleValidation, authorController.createAuthor); // Protected
+router.put('/:id', authenticateToken, getAuthor, validateAuthor, handleValidation, authorController.updateAuthor); // Protected
+router.delete('/:id', authenticateToken, getAuthor, authorController.deleteAuthor); // Protected
 
 module.exports = router;
